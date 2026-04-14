@@ -1,0 +1,67 @@
+import { Link } from 'react-router-dom';
+import './Hero.css';
+
+const Hero = () => {
+  const stats = [
+    { value: '20K+', label: 'Students Enrolled' },
+    { value: '96%', label: 'Employment Rate' },
+    { value: '200+', label: 'Industry Partners' },
+  ];
+
+  return (
+    <section className="hero">
+      <div className="hero__bg-shapes">
+        <div className="hero__shape hero__shape--1"></div>
+        <div className="hero__shape hero__shape--2"></div>
+        <div className="hero__shape hero__shape--3"></div>
+      </div>
+
+      <div className="container hero__inner">
+        <div className="hero__content fade-up fade-up-1">
+          <div className="hero__eyebrow">
+            <span className="badge badge-teal">🎓 Admissions Open 2026</span>
+          </div>
+          <h1 className="hero__title">
+            A Safe Place to Learn.<br />
+            A Strong Start to the{' '}
+            <span className="hero__title-accent">Future.</span>
+          </h1>
+          <p className="hero__desc">
+            Tamanna College is built to elevate life skills. Set on a stunning campus environment, we offer programmes that shape tomorrow's leaders across business, technology, healthcare, and the arts.
+          </p>
+          <div className="hero__actions">
+            <Link to="/contact" className="btn btn-primary">Apply for Admission</Link>
+            <Link to="/programs" className="btn btn-outline">View Programmes →</Link>
+          </div>
+          <div className="hero__stats">
+            {stats.map(s => (
+              <div key={s.label} className="hero__stat">
+                <div className="hero__stat-value">{s.value}</div>
+                <div className="hero__stat-label">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="hero__visual fade-up fade-up-2">
+          <div className="hero__img-wrapper">
+            <img
+              src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80"
+              alt="Students on campus"
+              className="hero__img"
+            />
+            <div className="hero__img-card">
+              <div className="hero__img-card-icon">🏆</div>
+              <div>
+                <div className="hero__img-card-title">Top Ranked College</div>
+                <div className="hero__img-card-sub">Nationally Accredited 2025</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;

@@ -1,0 +1,26 @@
+.strip {
+  background: var(--teal); color: white;
+  overflow: hidden; padding: 14px 0;
+}
+
+.strip__track {
+  display: flex; gap: 0;
+  animation: scroll-strip 30s linear infinite;
+  width: max-content;
+}
+
+.strip__item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 24px; white-space: nowrap;
+}
+
+.strip__icon { font-size: 16px; }
+.strip__text { font-size: 13px; font-weight: 500; letter-spacing: 0.3px; }
+.strip__sep { font-size: 8px; opacity: 0.4; margin-left: 10px; }
+
+@keyframes scroll-strip {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.strip:hover .strip__track { animation-play-state: paused; }
