@@ -225,3 +225,4 @@ After deployment:
 **404 on page refresh** → `client/vercel.json` rewrites all routes to `/` — ensure this file is present.
 
 **Admin login fails** → Check the bcrypt hash was generated with cost factor 10 and matches your password.
+# redeployed
