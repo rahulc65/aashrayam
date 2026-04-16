@@ -27,7 +27,7 @@ const Hero = () => {
             <span className="hero__title-accent">Future.</span>
           </h1>
           <p className="hero__desc">
-            Tamanna College is built to elevate life skills. Set on a stunning campus environment, we offer programmes that shape tomorrow's leaders across business, technology, healthcare, and the arts.
+            Aashrayam College is built to elevate life skills. Set on a stunning campus environment, we offer programmes that shape tomorrow's leaders across business, technology, healthcare, and the arts.
           </p>
           <div className="hero__actions">
             <Link to="/contact" className="btn btn-primary">Apply for Admission</Link>
