@@ -30,8 +30,8 @@ const Navbar = () => {
         <Link to="/" className="navbar__logo">
           <div className="navbar__logo-icon">⬡</div>
           <div>
-            <div className="navbar__logo-name">Orbit</div>
-            <div className="navbar__logo-tag">Education</div>
+            <div className="navbar__logo-name">Aashrayam</div>
+            <div className="navbar__logo-tag">College of Arts & Science</div>
           </div>
         </Link>
 
