@@ -28,6 +28,7 @@
 }
 .navbar__logo-tag {
   font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px;
+  padding-top:5px;
 }
 
 .navbar__links {
