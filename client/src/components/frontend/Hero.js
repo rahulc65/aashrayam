@@ -46,7 +46,7 @@ const Hero = () => {
         <div className="hero__visual fade-up fade-up-2">
           <div className="hero__img-wrapper">
             <img
-              src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80"
+              src="https://res.cloudinary.com/dpqgpqdwk/image/upload/v1776413116/DSCF2006_j9emnq.webp"
               alt="Students on campus"
               className="hero__img"
             />
