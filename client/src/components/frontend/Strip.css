@@ -1,6 +1,6 @@
 .strip {
   background: var(--teal); color: white;
-  overflow: hidden; padding: 20px 0;
+  overflow: hidden; padding: 25px 0;
 }
 
 .strip__track {
