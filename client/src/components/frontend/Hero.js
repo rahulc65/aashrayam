@@ -19,7 +19,7 @@ const Hero = () => {
       <div className="container hero__inner">
         <div className="hero__content fade-up fade-up-1">
           <div className="hero__eyebrow">
-            <span className="badge badge-teal">🎓 Admissions Open 2026</span>
+            <span className="badge badge-teal">Affiliated with University of Calicut</span>
           </div>
           <h1 className="hero__title">
             A Safe Place to Learn.<br />
