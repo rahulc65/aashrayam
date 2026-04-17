@@ -34,7 +34,7 @@
 
 .hero__desc {
   font-size: 17px; color: var(--muted); line-height: 1.75;
-  margin-bottom: 32px; max-width: 480px;
+  margin-bottom: 32px; max-width: 550px;
 }
 
 .hero__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
