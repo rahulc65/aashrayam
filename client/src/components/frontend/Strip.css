@@ -1,5 +1,5 @@
 .strip {
-  background: #0a0a0a;
+  background: var(--teal);
   overflow: hidden;
   padding: 24px 0;
 }
