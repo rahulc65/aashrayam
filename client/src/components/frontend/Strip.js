@@ -75,7 +75,6 @@ const Strip = () => (
             <strong className="strip__title">{item.title}</strong>
             <span className="strip__sub">{item.sub}</span>
           </div>
-          <span className="strip__sep">◆</span>
         </div>
       ))}
     </div>
