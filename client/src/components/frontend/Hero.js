@@ -51,10 +51,8 @@ const Hero = () => {
               className="hero__img"
             />
             <div className="hero__img-card">
-              <div className="hero__img-card-icon">🏆</div>
               <div>
-                <div className="hero__img-card-title">Top Ranked College</div>
-                <div className="hero__img-card-sub">Nationally Accredited 2025</div>
+                <div className="hero__img-card-title">🌿 Green Campus</div>
               </div>
             </div>
           </div>
