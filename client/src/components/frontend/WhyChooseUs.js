@@ -58,7 +58,7 @@ const WhyChooseUs = () => (
         </p>
         <div className="why__img-wrap">
           <img
-            src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=500&q=80"
+            src="https://res.cloudinary.com/dpqgpqdwk/image/upload/v1776413116/DSCF2006_j9emnq.webp"
             alt="Students collaborating"
             className="why__img"
           />
