@@ -2,24 +2,48 @@ import './WhyChooseUs.css';
 
 const reasons = [
   {
-    icon: '🗂️',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5"/>
+        <path d="M2 12l10 5 10-5"/>
+      </svg>
+    ),
     title: 'Career-Aligned Curriculum',
     desc: 'Our programmes are developed in partnership with industry leaders to ensure every module is relevant, practical, and job-ready from day one.',
   },
   {
-    icon: '🧭',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+        <path d="M16 3.13a4 4 0 010 7.75"/>
+      </svg>
+    ),
     title: 'Strong Mentoring & Counselling',
-    desc: 'Every student has access to dedicated academic advisors and career coaches who provide personalised guidance throughout their educational journey.',
+    desc: 'Every student receives personal guidance. Our faculty — including retired government professors — know students by name.',
   },
   {
-    icon: '🤝',
-    title: 'Safe & Supportive Campus',
-    desc: 'We foster an inclusive, respectful community with 24/7 student support services, wellbeing resources, and a vibrant campus life.',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    ),
+    title: 'Safe & Disciplined Campus',
+    desc: 'A structured environment parents trust — calm, secure, and designed to support focused learning and character development.',
   },
   {
-    icon: '🌐',
-    title: 'A Truly Global Campus',
-    desc: 'With students and faculty from over 40 countries, Orbit Education offers a multicultural environment that prepares you for a global career.',
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+        <line x1="9" y1="9" x2="9.01" y2="9"/>
+        <line x1="15" y1="9" x2="15.01" y2="9"/>
+      </svg>
+    ),
+    title: 'A Calm Green Campus',
+    desc: 'Nestled in Aashrayam Orchard, Kollengode — a natural setting that promotes wellbeing, focus, and belonging.',
   },
 ];
 
