@@ -30,7 +30,7 @@ const WhyChooseUs = () => (
         <div className="section-label">Why Choose Us</div>
         <h2 className="section-title">More Than a Degree.<br />A Direction.</h2>
         <p className="section-desc">
-          Choosing the right college is one of the most important decisions of your life. At Orbit Education, we've built every aspect of our institution around your success.
+          Choosing the right college is one of the most important decisions of your life. At Aashrayam, we've built every aspect of our institution around your success.
         </p>
         <div className="why__img-wrap">
           <img
