@@ -17,10 +17,11 @@
 .navbar__logo {
   display: flex; align-items: center; gap: 10px; text-decoration: none;
 }
-.navbar__logo-icon {
-  width: 40px; height: 40px; background: var(--teal); color: white;
-  border-radius: 10px; display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: bold; flex-shrink: 0;
+.navbar__logo-svg {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  color: var(--teal); /* inherits via currentColor — change to any color you want */
 }
 .navbar__logo-name {
   font-family: var(--font-display); font-weight: 700; font-size: 18px;
