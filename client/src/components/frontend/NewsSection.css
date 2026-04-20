@@ -1,11 +1,11 @@
 .news-section { background: var(--light); }
 
 .news-section__header {
-  display: flex; justify-content: space-between; align-items: flex-end;
+  display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 20px; margin-bottom: 40px;
 }
 
-.news-section__filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.news-section__filters { display: flex; gap: 8px; flex-wrap: wrap; padding-top:25px; }
 .news-section__filter {
   padding: 7px 16px; border-radius: 50px; border: 1.5px solid var(--border);
   background: white; font-size: 13px; font-weight: 500; color: var(--muted);
