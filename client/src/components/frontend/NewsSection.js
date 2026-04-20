@@ -64,7 +64,10 @@ const NewsSection = () => {
                   </div>
                   <h3 className="news-card__title">{item.title}</h3>
                   {item.excerpt && <p className="news-card__excerpt">{item.excerpt}</p>}
-                  <span className="news-card__read">Read more →</span>
+                  <span className="news-card__read">
+                    <div>Read more</div>
+                    <div>→</div>
+                    </span>
                 </div>
               </article>
             ))}
