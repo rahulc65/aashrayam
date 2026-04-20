@@ -66,7 +66,7 @@ const NewsSection = () => {
                   {item.excerpt && <p className="news-card__excerpt">{item.excerpt}</p>}
                   <span className="news-card__read">
                     <div>Read more</div>
-                    <div>→</div>
+                    <div style="padding-top: 3px;">→</div>
                     </span>
                 </div>
               </article>
