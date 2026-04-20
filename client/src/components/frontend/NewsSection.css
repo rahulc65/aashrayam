@@ -37,7 +37,7 @@
   color: var(--charcoal); margin-bottom: 8px; line-height: 1.35;
 }
 .news-card__excerpt { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
-.news-card__read { display: flex; align-items:center; justify-content:center; gap:5px; font-size: 13px; font-weight: 600; color: var(--teal); cursor: pointer; }
+.news-card__read { display: flex; align-items:center; gap:5px; font-size: 13px; font-weight: 600; color: var(--teal); cursor: pointer; }
 
 .news-section__empty {
   text-align: center; padding: 48px; color: var(--muted); font-size: 15px;
