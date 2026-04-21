@@ -14,11 +14,11 @@ const Home = () => (
     <Hero />
     <Strip />
     <WhyChooseUs />
-    <NewsSection />
-    <EventsSection />
-    <AdmissionBanner />
     <ProgramsSection />
     <GallerySection />
+    <NewsSection />
+    <AdmissionBanner />
+    <EventsSection />
     <TestimonialsSection />
     <GetInTouch />
   </main>

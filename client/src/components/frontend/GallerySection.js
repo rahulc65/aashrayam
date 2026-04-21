@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { api } from '../../utils/api';
 import './GallerySection.css';
 
@@ -107,6 +108,15 @@ const GallerySection = () => {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* View Full Gallery Button */}
+        {!loading && (
+          <div className="gallery-section__cta">
+            <Link to="/gallery" className="btn btn-primary">
+              View Full Gallery
+            </Link>
           </div>
         )}
       </div>

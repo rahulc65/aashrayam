@@ -39,6 +39,15 @@ export const api = {
   // Gallery
   getGallery: () => fetch(`${API_URL}/gallery`).then(r => r.json()),
   getAllGallery: () => fetch(`${API_URL}/gallery/all`, { headers: headers(true) }).then(r => r.json()),
+  uploadGalleryImage: (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return fetch(`${API_URL}/gallery/upload-image`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${getToken()}` },
+      body: formData
+    }).then(r => r.json());
+  },
   createGallery: (data) => fetch(`${API_URL}/gallery`, { method: 'POST', headers: headers(true), body: JSON.stringify(data) }).then(r => r.json()),
   updateGallery: (id, data) => fetch(`${API_URL}/gallery/${id}`, { method: 'PUT', headers: headers(true), body: JSON.stringify(data) }).then(r => r.json()),
   deleteGallery: (id) => fetch(`${API_URL}/gallery/${id}`, { method: 'DELETE', headers: headers(true) }).then(r => r.json()),

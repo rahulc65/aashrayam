@@ -10,6 +10,7 @@ import Footer from './components/frontend/Footer';
 import Home from './pages/frontend/Home';
 import NewsListing from './pages/frontend/NewsListing';
 import NewsDetail from './pages/frontend/NewsDetail';
+import GalleryFull from './pages/frontend/GalleryFull';
 
 // Admin pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -42,6 +43,7 @@ function App() {
           <Route path="/" element={<FrontendLayout><Home /></FrontendLayout>} />
           <Route path="/news" element={<FrontendLayout><NewsListing /></FrontendLayout>} />
           <Route path="/news/:id" element={<FrontendLayout><NewsDetail /></FrontendLayout>} />
+          <Route path="/gallery" element={<FrontendLayout><GalleryFull /></FrontendLayout>} />
 
           {/* Admin */}
           <Route path="/admin/login" element={<AdminLogin />} />

@@ -8,19 +8,8 @@ const items = [
         <polyline points="22,4 12,14.01 9,11.01"/>
       </svg>
     ),
-    title: 'Nationally Accredited',
-    sub: 'Recognised & approved institution',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="2" y1="12" x2="22" y2="12"/>
-        <path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
-      </svg>
-    ),
-    title: 'International Exchange',
-    sub: 'Global student programmes',
+    title: 'Focus-first environment',
+    sub: 'A calm campus built for deep focus.',
   },
   {
     icon: (
@@ -29,17 +18,8 @@ const items = [
         <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
       </svg>
     ),
-    title: '96% Graduate Employment',
-    sub: 'Industry-ready graduates',
-  },
-  {
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-      </svg>
-    ),
-    title: 'Top Ranked 2025',
-    sub: 'Excellence in education',
+    title: 'Significantly lower fees',
+    sub: ' High-value education at a fraction of the cost',
   },
   {
     icon: (
@@ -48,8 +28,8 @@ const items = [
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
       </svg>
     ),
-    title: '50+ Programmes',
-    sub: 'Diverse academic pathways',
+    title: 'Rare programs in Palakkad',
+    sub: 'Uncommon courses with a clear edge.',
   },
   {
     icon: (
@@ -60,8 +40,8 @@ const items = [
         <path d="M16 3.13a4 4 0 010 7.75"/>
       </svg>
     ),
-    title: '200+ Industry Partners',
-    sub: 'Strong placement network',
+    title: 'Small batches, big impact',
+    sub: 'Personal attention that drives real progress',
   },
 ];
 

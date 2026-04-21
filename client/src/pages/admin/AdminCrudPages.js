@@ -79,20 +79,33 @@ export const AdminPrograms = () => (
       onDelete={api.deleteProgram}
       emptyMsg="No programmes yet. Add your first programme!"
       columns={[
-        { key: 'icon', label: 'Icon' },
         { key: 'title', label: 'Programme' },
         { key: 'duration', label: 'Duration' },
+        { key: 'normal_fee', label: 'Normal Fee' },
+        { key: 'seats', label: 'Seats' },
         { key: 'sort_order', label: 'Order' },
         { key: 'published', label: 'Status' },
       ]}
       fields={[
+        // Basic Info
         { name: 'title', label: 'Programme Title', required: true, placeholder: 'e.g. Business & Management' },
-        { name: 'icon', label: 'Icon (Emoji)', placeholder: '🎓', half: true },
         { name: 'duration', label: 'Duration', placeholder: 'e.g. 3 Years', half: true },
-        { name: 'color', label: 'Accent Color', type: 'color', default: '#2D7D6F' },
-        { name: 'description', label: 'Description', type: 'textarea', rows: 3, placeholder: 'What this programme covers...' },
-        { name: 'features', label: 'Key Features (one per line)', type: 'textarea', rows: 4, placeholder: 'Industry Mentorship\nLive Projects\nCareer Placement\nGlobal Exchange' },
         { name: 'sort_order', label: 'Display Order', type: 'number', default: 0, half: true },
+        { name: 'description', label: 'Description', type: 'textarea', rows: 3, placeholder: 'What this programme covers...' },
+        
+        // Fees Section
+        { name: 'normal_fee', label: 'Normal Course Fee', placeholder: 'e.g. ₹50,000 per year', half: true },
+        { name: 'addon_fee', label: 'Add-on Course Fee', placeholder: 'e.g. ₹15,000', half: true },
+        
+        // Additional Details
+        { name: 'addon_courses', label: 'Add-on Courses (one per line)', type: 'textarea', rows: 3, placeholder: 'Industry Certification\nLeadership Training\nLanguage Programme' },
+        { name: 'seats', label: 'Number of Seats', type: 'number', placeholder: 'e.g. 60', half: true },
+        { name: 'tags', label: 'Tags (one per line)', type: 'textarea', rows: 2, placeholder: 'Honours Program\nJob Ready\nFuture Ready' },
+        
+        // Features
+        { name: 'features', label: 'Key Features (one per line)', type: 'textarea', rows: 4, placeholder: 'Industry Mentorship\nLive Projects\nCareer Placement\nGlobal Exchange' },
+        
+        // Status
         { name: 'published', label: 'Published', type: 'toggle', default: true, onLabel: 'Published', offLabel: 'Draft' },
       ]}
     />
@@ -110,16 +123,18 @@ export const AdminGallery = () => (
       onDelete={api.deleteGallery}
       emptyMsg="No gallery images yet. Add your first campus photo!"
       columns={[
-        { key: 'image_url', label: 'Preview', render: r => r.image_url
-          ? <img src={r.image_url} alt="" style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: 6 }} />
-          : '—' },
+        { key: 'image_url', label: 'Preview', render: r => {
+          const src = r.image_url || (r.file_path ? `/uploads/gallery/${r.file_path}` : null);
+          return src ? <img src={src} alt="" style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: 6 }} /> : '—';
+        }},
         { key: 'title', label: 'Title' },
         { key: 'category', label: 'Category' },
         { key: 'sort_order', label: 'Order' },
         { key: 'published', label: 'Status' },
       ]}
       fields={[
-        { name: 'image_url', label: 'Image URL *', required: true, placeholder: 'https://images.unsplash.com/...' },
+        { name: 'image_url', label: 'Image URL (Optional)', placeholder: 'https://images.unsplash.com/...' },
+        { name: 'file_path', label: 'Upload Image File', type: 'image', placeholder: 'Upload campus photo' },
         { name: 'title', label: 'Caption / Title', placeholder: 'e.g. Students at Science Lab' },
         { name: 'category', label: 'Category', type: 'select', options: ['Campus Life','Events','Facilities','Sports','Cultural','Graduation'], default: 'Campus Life' },
         { name: 'sort_order', label: 'Display Order', type: 'number', default: 0, half: true },

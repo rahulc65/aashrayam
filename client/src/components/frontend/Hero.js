@@ -3,9 +3,9 @@ import './Hero.css';
 
 const Hero = () => {
   const stats = [
-    { value: '20K+', label: 'Students Enrolled' },
-    { value: '96%', label: 'Employment Rate' },
-    { value: '200+', label: 'Industry Partners' },
+    { value: '2016', label: 'Established' },
+    { value: '5 Acres', label: 'Green Campus' },
+    { value: 'Univ. of Calicut', label: 'Affiliated (2024–25)' },
   ];
 
   return (

@@ -53,22 +53,38 @@ CREATE TABLE IF NOT EXISTS programs (
   icon VARCHAR(100),
   color VARCHAR(50) DEFAULT '#2D7D6F',
   features TEXT[],
+  normal_fee VARCHAR(100),
+  addon_fee VARCHAR(100),
+  addon_courses TEXT[],
+  seats INTEGER,
+  tags TEXT[],
   published BOOLEAN DEFAULT true,
   sort_order INTEGER DEFAULT 0,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Add columns if they don't exist (for existing databases)
+ALTER TABLE programs ADD COLUMN IF NOT EXISTS normal_fee VARCHAR(100);
+ALTER TABLE programs ADD COLUMN IF NOT EXISTS addon_fee VARCHAR(100);
+ALTER TABLE programs ADD COLUMN IF NOT EXISTS addon_courses TEXT[];
+ALTER TABLE programs ADD COLUMN IF NOT EXISTS seats INTEGER;
+ALTER TABLE programs ADD COLUMN IF NOT EXISTS tags TEXT[];
+
 -- Gallery
 CREATE TABLE IF NOT EXISTS gallery (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255),
-  image_url TEXT NOT NULL,
+  image_url TEXT,
+  file_path VARCHAR(500),
   category VARCHAR(100) DEFAULT 'Campus Life',
   published BOOLEAN DEFAULT true,
   sort_order INTEGER DEFAULT 0,
   created_at TIMESTAMP DEFAULT NOW()
 );
+
+-- Add file_path column if it doesn't exist (for existing databases)
+ALTER TABLE gallery ADD COLUMN IF NOT EXISTS file_path VARCHAR(500);
 
 -- Testimonials
 CREATE TABLE IF NOT EXISTS testimonials (

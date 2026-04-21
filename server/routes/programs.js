@@ -24,12 +24,12 @@ router.get('/all', authMiddleware, async (req, res) => {
 });
 
 router.post('/', authMiddleware, async (req, res) => {
-  const { title, description, duration, icon, color, features, published, sort_order } = req.body;
+  const { title, description, duration, icon, color, features, normal_fee, addon_fee, addon_courses, seats, tags, published, sort_order } = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO programs(title,description,duration,icon,color,features,published,sort_order)
-       VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
-      [title, description, duration, icon, color || '#2D7D6F', features || [], published !== false, sort_order || 0]
+      `INSERT INTO programs(title,description,duration,icon,color,features,normal_fee,addon_fee,addon_courses,seats,tags,published,sort_order)
+       VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *`,
+      [title, description, duration, icon, color || '#2D7D6F', features || [], normal_fee || null, addon_fee || null, addon_courses || [], seats || null, tags || [], published !== false, sort_order || 0]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -39,12 +39,12 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 router.put('/:id', authMiddleware, async (req, res) => {
-  const { title, description, duration, icon, color, features, published, sort_order } = req.body;
+  const { title, description, duration, icon, color, features, normal_fee, addon_fee, addon_courses, seats, tags, published, sort_order } = req.body;
   try {
     const result = await pool.query(
       `UPDATE programs SET title=$1,description=$2,duration=$3,icon=$4,color=$5,
-       features=$6,published=$7,sort_order=$8,updated_at=NOW() WHERE id=$9 RETURNING *`,
-      [title, description, duration, icon, color, features, published, sort_order, req.params.id]
+       features=$6,normal_fee=$7,addon_fee=$8,addon_courses=$9,seats=$10,tags=$11,published=$12,sort_order=$13,updated_at=NOW() WHERE id=$14 RETURNING *`,
+      [title, description, duration, icon, color, features, normal_fee, addon_fee, addon_courses, seats, tags, published, sort_order, req.params.id]
     );
     if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
     res.json(result.rows[0]);

@@ -116,7 +116,7 @@ const CrudManager = ({
   const openEdit = (item) => {
     const f = {};
     fields.forEach(field => {
-      if (field.name === 'features' && Array.isArray(item[field.name])) {
+      if ((field.name === 'features' || field.name === 'addon_courses' || field.name === 'tags') && Array.isArray(item[field.name])) {
         f[field.name] = item[field.name].join('\n');
       } else {
         f[field.name] = item[field.name] ?? field.default ?? '';
@@ -148,6 +148,12 @@ const CrudManager = ({
 
     if (payload.features && typeof payload.features === 'string') {
       payload.features = payload.features.split('\n').map(s => s.trim()).filter(Boolean);
+    }
+    if (payload.addon_courses && typeof payload.addon_courses === 'string') {
+      payload.addon_courses = payload.addon_courses.split('\n').map(s => s.trim()).filter(Boolean);
+    }
+    if (payload.tags && typeof payload.tags === 'string') {
+      payload.tags = payload.tags.split('\n').map(s => s.trim()).filter(Boolean);
     }
     fields.forEach(f => {
       if (f.type === 'toggle') payload[f.name] = payload[f.name] === true || payload[f.name] === 'true';

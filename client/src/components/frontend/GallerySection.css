@@ -200,3 +200,12 @@
     grid-column: span 1;
   }
 }
+
+/* ── CTA Button ── */
+.gallery-section__cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 48px;
+  padding-top: 24px;
+}

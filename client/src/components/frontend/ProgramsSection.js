@@ -15,17 +15,26 @@ const IconArrow = () => (
   </svg>
 );
 
-const IconDefault = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2L2 7l10 5 10-5-10-5z" />
-    <path d="M2 17l10 5 10-5" />
-    <path d="M2 12l10 5 10-5" />
+const IconUsers = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 00-3-3.87" />
+    <path d="M16 3.13a4 4 0 010 7.75" />
+  </svg>
+);
+
+const IconDollar = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="12" y1="1" x2="12" y2="23" />
+    <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
   </svg>
 );
 
 const ProgramsSection = () => {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [featuredIndex, setFeaturedIndex] = useState(0);
 
   useEffect(() => {
     api.getPrograms().then(data => {
@@ -53,24 +62,25 @@ const ProgramsSection = () => {
         ) : programs.length === 0 ? (
           <div className="news-section__empty">No programmes listed yet.</div>
         ) : (
-          <div className="programs-section__grid">
+          <div
+            className="programs-section__grid"
+            onMouseLeave={() => setFeaturedIndex(0)}
+          >
             {programs.map((prog, i) => (
               <div
-                className={`program-card${i === 0 ? ' program-card--featured' : ''}${prog.is_proposed ? ' program-card--proposed' : ''}`}
+                className={`program-card${featuredIndex === i ? ' program-card--featured' : ''}${prog.is_proposed ? ' program-card--proposed' : ''}`}
                 key={prog.id}
                 style={{ animationDelay: `${i * 0.08}s` }}
+                onMouseEnter={() => setFeaturedIndex(i)}
               >
                 {prog.is_proposed && (
                   <div className="program-card__proposed-badge">Proposed</div>
                 )}
 
-                <div className="program-card__icon-wrap">
-                  <IconDefault />
+                {/* Program Index Number */}
+                <div className="program-card__number">
+                  {String(i + 1).padStart(2, '0')}
                 </div>
-
-                {prog.subtitle && (
-                  <div className="program-card__code">{prog.subtitle}</div>
-                )}
 
                 <h3 className="program-card__title">{prog.title}</h3>
 
@@ -78,12 +88,59 @@ const ProgramsSection = () => {
                   <p className="program-card__desc">{prog.description}</p>
                 )}
 
+                {/* Tags Section */}
+                {prog.tags && prog.tags.length > 0 && (
+                  <div className="program-card__tags">
+                    {prog.tags.map((tag, tagIdx) => (
+                      <span key={tagIdx} className="program-card__tag-pill">{tag}</span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Fees Section */}
+                {(prog.normal_fee || prog.addon_fee) && (
+                  <div className="program-card__fees">
+                    {prog.normal_fee && (
+                      <div className="program-card__fee-item">
+                        <span className="program-card__fee-label">Normal Fee</span>
+                        <span className="program-card__fee-value">{prog.normal_fee}</span>
+                      </div>
+                    )}
+                    {prog.addon_fee && (
+                      <div className="program-card__fee-item">
+                        <span className="program-card__fee-label">Add-on Fee</span>
+                        <span className="program-card__fee-value">{prog.addon_fee}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Add-on Courses Section */}
+                {prog.addon_courses && prog.addon_courses.length > 0 && (
+                  <div className="program-card__addons">
+                    <div className="program-card__addon-title">Add-on Courses:</div>
+                    <ul className="program-card__addon-list">
+                      {prog.addon_courses.map((course, courseIdx) => (
+                        <li key={courseIdx}>{course}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Footer Info */}
                 <div className="program-card__footer">
-                  {prog.duration && (
-                    <span className="program-card__tag">
-                      <IconClock /> {prog.duration}
-                    </span>
-                  )}
+                  <div className="program-card__footer-items">
+                    {prog.duration && (
+                      <span className="program-card__footer-item">
+                        <IconClock /> {prog.duration}
+                      </span>
+                    )}
+                    {prog.seats && (
+                      <span className="program-card__footer-item">
+                        <IconUsers /> {prog.seats} seats
+                      </span>
+                    )}
+                  </div>
                   <div className="program-card__arrow">
                     <IconArrow />
                   </div>
