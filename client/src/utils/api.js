@@ -17,6 +17,7 @@ export const api = {
   // News
   getNews: () => fetch(`${API_URL}/news`).then(r => r.json()),
   getAllNews: () => fetch(`${API_URL}/news/all`, { headers: headers(true) }).then(r => r.json()),
+  uploadNewsImage: (imageData) => fetch(`${API_URL}/news/upload-image`, { method: 'POST', headers: headers(true), body: JSON.stringify({ imageData }) }).then(r => r.json()),
   createNews: (data) => fetch(`${API_URL}/news`, { method: 'POST', headers: headers(true), body: JSON.stringify(data) }).then(r => r.json()),
   updateNews: (id, data) => fetch(`${API_URL}/news/${id}`, { method: 'PUT', headers: headers(true), body: JSON.stringify(data) }).then(r => r.json()),
   deleteNews: (id) => fetch(`${API_URL}/news/${id}`, { method: 'DELETE', headers: headers(true) }).then(r => r.json()),

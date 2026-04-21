@@ -11,6 +11,36 @@ const formatDate = (d) => {
   };
 };
 
+const IconClock = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+const IconPin = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+);
+
+const IconCalendar = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <line x1="16" y1="2" x2="16" y2="6" />
+    <line x1="8" y1="2" x2="8" y2="6" />
+    <line x1="3" y1="10" x2="21" y2="10" />
+  </svg>
+);
+
+const IconArrow = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+
 const EventsSection = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,7 +64,7 @@ const EventsSection = () => {
         <div className="events-section__header">
           <div>
             <div className="section-label">Upcoming Events</div>
-            <h2 className="section-title">What's Happening at Orbit</h2>
+            <h2 className="section-title">What's Happening at Aashrayam</h2>
           </div>
           <div className="events-section__filters">
             {categories.map(c => (
@@ -65,11 +95,15 @@ const EventsSection = () => {
                       {ev.category && <span className="badge badge-teal">{ev.category}</span>}
                       <h3 className="event-row__title">{ev.title}</h3>
                       <div className="event-row__meta">
-                        {ev.event_time && <span>🕐 {ev.event_time}</span>}
-                        {ev.location && <span>📍 {ev.location}</span>}
+                        {ev.event_time && (
+                          <span><IconClock /> {ev.event_time}</span>
+                        )}
+                        {ev.location && (
+                          <span><IconPin /> {ev.location}</span>
+                        )}
                       </div>
                     </div>
-                    <div className="event-row__arrow">→</div>
+                    <div className="event-row__arrow"><IconArrow /></div>
                   </div>
                 );
               })}
@@ -89,9 +123,14 @@ const EventsSection = () => {
                     )}
                     <div className="event-featured__info">
                       {featured.event_date && (
-                        <span>📅 {new Date(featured.event_date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                        <span>
+                          <IconCalendar />
+                          {new Date(featured.event_date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        </span>
                       )}
-                      {featured.location && <span>📍 {featured.location}</span>}
+                      {featured.location && (
+                        <span><IconPin /> {featured.location}</span>
+                      )}
                     </div>
                   </div>
                 </div>

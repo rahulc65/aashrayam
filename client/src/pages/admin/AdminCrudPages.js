@@ -26,7 +26,7 @@ export const AdminNews = () => (
         { name: 'badge_color', label: 'Badge Color', type: 'color', default: '#2D7D6F', half: true },
         { name: 'excerpt', label: 'Short Excerpt', type: 'textarea', rows: 2, placeholder: 'Brief summary shown on homepage...' },
         { name: 'content', label: 'Full Content', type: 'textarea', rows: 5, placeholder: 'Full announcement text...' },
-        { name: 'image_url', label: 'Image URL', placeholder: 'https://...' },
+        { name: 'image_url', label: 'Featured Image', type: 'image', placeholder: 'Upload announcement image' },
         { name: 'published', label: 'Published', type: 'toggle', default: true, onLabel: 'Published', offLabel: 'Draft' },
       ]}
     />

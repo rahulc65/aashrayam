@@ -1,11 +1,11 @@
 .events-section { background: white; }
 
 .events-section__header {
-  display: flex; justify-content: space-between; align-items: flex-end;
+  display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 20px; margin-bottom: 40px;
 }
 
-.events-section__filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.events-section__filters { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 25px;}
 
 .events-section__layout {
   display: grid; grid-template-columns: 1fr 420px; gap: 32px; align-items: start;

@@ -2,6 +2,41 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../db');
 const authMiddleware = require('../middleware/auth');
+const fs = require('fs');
+const path = require('path');
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, '../uploads/news');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// Helper function to save base64 image and return filename
+const saveBase64Image = (base64String) => {
+  if (!base64String || typeof base64String !== 'string') return null;
+
+  try {
+    // Extract base64 data and file type
+    const matches = base64String.match(/^data:image\/(\w+);base64,(.+)$/);
+    if (!matches) return null;
+
+    const [, fileType, base64Data] = matches;
+    const buffer = Buffer.from(base64Data, 'base64');
+
+    // Generate unique filename
+    const filename = `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileType}`;
+    const filepath = path.join(uploadsDir, filename);
+
+    // Save file
+    fs.writeFileSync(filepath, buffer);
+
+    // Return relative path for API access
+    return `/uploads/news/${filename}`;
+  } catch (err) {
+    console.error('Error saving image:', err);
+    return null;
+  }
+};
 
 // GET /api/news — public
 router.get('/', async (req, res) => {
@@ -36,9 +71,38 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// POST /api/news/upload-image — admin (image upload endpoint)
+router.post('/upload-image', authMiddleware, async (req, res) => {
+  const { imageData } = req.body;
+
+  if (!imageData) {
+    return res.status(400).json({ error: 'No image data provided' });
+  }
+
+  try {
+    const imagePath = saveBase64Image(imageData);
+    if (!imagePath) {
+      return res.status(400).json({ error: 'Invalid image data or format' });
+    }
+    res.json({ imageUrl: imagePath });
+  } catch (err) {
+    console.error('Error uploading image:', err);
+    res.status(500).json({ error: 'Error uploading image' });
+  }
+});
+
 // POST /api/news — admin
 router.post('/', authMiddleware, async (req, res) => {
-  const { title, excerpt, content, category, badge_text, badge_color, image_url, published } = req.body;
+  let { title, excerpt, content, category, badge_text, badge_color, image_url, imageData, published } = req.body;
+
+  // Handle image upload if imageData is provided
+  if (imageData && !image_url) {
+    const savedImagePath = saveBase64Image(imageData);
+    if (savedImagePath) {
+      image_url = savedImagePath;
+    }
+  }
+
   try {
     const result = await pool.query(
       `INSERT INTO news(title,excerpt,content,category,badge_text,badge_color,image_url,published)
@@ -54,7 +118,16 @@ router.post('/', authMiddleware, async (req, res) => {
 
 // PUT /api/news/:id — admin
 router.put('/:id', authMiddleware, async (req, res) => {
-  const { title, excerpt, content, category, badge_text, badge_color, image_url, published } = req.body;
+  let { title, excerpt, content, category, badge_text, badge_color, image_url, imageData, published } = req.body;
+
+  // Handle image upload if imageData is provided
+  if (imageData && imageData !== image_url) {
+    const savedImagePath = saveBase64Image(imageData);
+    if (savedImagePath) {
+      image_url = savedImagePath;
+    }
+  }
+
   try {
     const result = await pool.query(
       `UPDATE news SET title=$1,excerpt=$2,content=$3,category=$4,badge_text=$5,
@@ -71,9 +144,23 @@ router.put('/:id', authMiddleware, async (req, res) => {
 // DELETE /api/news/:id — admin
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
+    // Get the news item to find associated image
+    const newsResult = await pool.query('SELECT image_url FROM news WHERE id = $1', [req.params.id]);
+    const newsItem = newsResult.rows[0];
+
+    // Delete image file if it's a local upload
+    if (newsItem && newsItem.image_url && newsItem.image_url.startsWith('/uploads/news/')) {
+      const imagePath = path.join(__dirname, '..', newsItem.image_url);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+
+    // Delete database record
     await pool.query('DELETE FROM news WHERE id = $1', [req.params.id]);
     res.json({ message: 'Deleted' });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Server error' });
   }
 });

@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+
 import './AdminLogin.css';
+
+const AashrayamLogo = () => (
+  <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="40,4 62,18 40,32 18,18" fill="currentColor"/>
+    <path d="M29,20 Q40,28 40,28 Q40,28 51,20 L51,30 Q40,38 40,38 Q40,38 29,30 Z" fill="white" opacity="0.85"/>
+    <polygon points="40,36 68,50 40,64 12,50" fill="currentColor" opacity="0.7"/>
+    <polygon points="22,62 34,68 22,74 10,68" fill="currentColor" opacity="0.45"/>
+    <polygon points="58,62 70,68 58,74 46,68" fill="currentColor" opacity="0.45"/>
+  </svg>
+);
 
 const AdminLogin = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -24,9 +35,11 @@ const AdminLogin = () => {
     <div className="admin-login">
       <div className="admin-login__card">
         <div className="admin-login__logo">
-          <div className="admin-login__logo-icon">⬡</div>
+          <div className="admin-login__logo-icon">
+            <AashrayamLogo />
+          </div>
           <div>
-            <div className="admin-login__logo-name">Orbit Education</div>
+            <div className="admin-login__logo-name">Aashrayam</div>
             <div className="admin-login__logo-tag">Admin Panel</div>
           </div>
         </div>
@@ -52,9 +65,6 @@ const AdminLogin = () => {
           </button>
         </form>
 
-        <div className="admin-login__setup-hint">
-          First time? Visit <code>/health</code> on your API, then use the SQL setup from the README to create your admin account.
-        </div>
       </div>
     </div>
   );

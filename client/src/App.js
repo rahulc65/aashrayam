@@ -8,6 +8,8 @@ import Footer from './components/frontend/Footer';
 
 // Frontend pages
 import Home from './pages/frontend/Home';
+import NewsListing from './pages/frontend/NewsListing';
+import NewsDetail from './pages/frontend/NewsDetail';
 
 // Admin pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -38,6 +40,8 @@ function App() {
         <Routes>
           {/* Frontend */}
           <Route path="/" element={<FrontendLayout><Home /></FrontendLayout>} />
+          <Route path="/news" element={<FrontendLayout><NewsListing /></FrontendLayout>} />
+          <Route path="/news/:id" element={<FrontendLayout><NewsDetail /></FrontendLayout>} />
 
           {/* Admin */}
           <Route path="/admin/login" element={<AdminLogin />} />

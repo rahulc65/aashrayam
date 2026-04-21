@@ -5,3 +5,4 @@ build/
 dist/
 .vercel/
 *.log
+server/uploads/

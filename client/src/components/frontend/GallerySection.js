@@ -2,6 +2,36 @@ import { useState, useEffect } from 'react';
 import { api } from '../../utils/api';
 import './GallerySection.css';
 
+const IconClose = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
+const IconZoom = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    <line x1="11" y1="8" x2="11" y2="14" />
+    <line x1="8" y1="11" x2="14" y2="11" />
+  </svg>
+);
+
+/* SVG placeholders shown when no image is loaded yet */
+const placeholderIcons = [
+  // Building
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>,
+  // Book
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>,
+  // Monitor
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>,
+  // Clock
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,
+  // Home
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>,
+];
+
 const GallerySection = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,36 +44,66 @@ const GallerySection = () => {
     }).catch(() => setLoading(false));
   }, []);
 
+  // Show placeholder grid even with no images
+  const displayItems = images.length > 0 ? images.slice(0, 5) : [];
+
   return (
     <section className="gallery-section section" id="gallery">
       <div className="container">
+
+        {/* Header — untouched */}
         <div className="gallery-section__header">
           <div>
             <div className="section-label">Campus Life</div>
             <h2 className="section-title">Where Learning Meets a Life Well-Lived</h2>
           </div>
-          <p className="section-desc" style={{ maxWidth: 360 }}>
-            A glimpse into the vibrant campus community, events, and facilities that make Orbit Education truly special.
+          <p className="section-desc" style={{ maxWidth: 500 }}>
+            A glimpse into the vibrant campus community, events, and facilities
+            that make Aashrayam truly special.
           </p>
         </div>
 
         {loading ? (
           <div className="loader"><div className="spinner"></div> Loading gallery...</div>
-        ) : images.length === 0 ? (
-          <div className="news-section__empty">Gallery coming soon.</div>
         ) : (
           <div className="gallery-section__grid">
-            {images.map((img, i) => (
+            {displayItems.map((img, i) => (
               <div
                 key={img.id}
-                className={`gallery-item gallery-item--${i % 5 === 0 ? 'wide' : i % 7 === 0 ? 'tall' : 'normal'}`}
+                className={`gallery-item${i === 0 ? ' gallery-item--featured' : ''}`}
                 onClick={() => setLightbox(img)}
-                style={{ animationDelay: `${i * 0.05}s` }}
+                style={{ animationDelay: `${i * 0.07}s` }}
               >
-                <img src={img.image_url} alt={img.title || 'Campus'} className="gallery-item__img" />
+                {img.image_url ? (
+                  <img src={img.image_url} alt={img.title || 'Campus'} className="gallery-item__img" />
+                ) : (
+                  <div className="gallery-item__placeholder">
+                    <div className="gallery-item__placeholder-icon">
+                      {placeholderIcons[i % placeholderIcons.length]}
+                    </div>
+                    <p className="gallery-item__placeholder-label">{img.title || 'Campus'}</p>
+                  </div>
+                )}
                 <div className="gallery-item__overlay">
-                  {img.title && <span className="gallery-item__title">{img.title}</span>}
-                  <span className="gallery-item__zoom">🔍</span>
+                  <div className="gallery-item__zoom"><IconZoom /></div>
+                </div>
+                {img.title && (
+                  <div className="gallery-item__label">{img.title}</div>
+                )}
+              </div>
+            ))}
+
+            {/* Fill remaining slots with placeholders if fewer than 5 images */}
+            {Array.from({ length: Math.max(0, 5 - displayItems.length) }).map((_, i) => (
+              <div
+                key={`placeholder-${i}`}
+                className={`gallery-item gallery-item--empty${i + displayItems.length === 0 ? ' gallery-item--featured' : ''}`}
+                style={{ animationDelay: `${(i + displayItems.length) * 0.07}s` }}
+              >
+                <div className="gallery-item__placeholder">
+                  <div className="gallery-item__placeholder-icon">
+                    {placeholderIcons[(i + displayItems.length) % placeholderIcons.length]}
+                  </div>
                 </div>
               </div>
             ))}
@@ -51,10 +111,13 @@ const GallerySection = () => {
         )}
       </div>
 
+      {/* Lightbox */}
       {lightbox && (
         <div className="lightbox" onClick={() => setLightbox(null)}>
           <div className="lightbox__inner" onClick={e => e.stopPropagation()}>
-            <button className="lightbox__close" onClick={() => setLightbox(null)}>✕</button>
+            <button className="lightbox__close" onClick={() => setLightbox(null)}>
+              <IconClose />
+            </button>
             <img src={lightbox.image_url} alt={lightbox.title} className="lightbox__img" />
             {lightbox.title && <div className="lightbox__caption">{lightbox.title}</div>}
           </div>

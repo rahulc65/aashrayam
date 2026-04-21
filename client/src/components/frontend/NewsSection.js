@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../../utils/api';
 import './NewsSection.css';
 
 const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
 
 const NewsSection = () => {
+  const navigate = useNavigate();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
@@ -45,33 +47,58 @@ const NewsSection = () => {
         ) : filtered.length === 0 ? (
           <div className="news-section__empty">No announcements at the moment. Check back soon!</div>
         ) : (
-          <div className="news-section__grid">
-            {filtered.slice(0, 6).map((item, i) => (
-              <article className="news-card" key={item.id} style={{ animationDelay: `${i * 0.07}s` }}>
-                {item.image_url && (
-                  <div className="news-card__img-wrap">
-                    <img src={item.image_url} alt={item.title} className="news-card__img" />
-                  </div>
-                )}
-                <div className="news-card__body">
-                  <div className="news-card__meta">
-                    {item.badge_text && (
-                      <span className="badge" style={{ background: (item.badge_color || '#2D7D6F') + '20', color: item.badge_color || '#2D7D6F' }}>
-                        {item.badge_text}
-                      </span>
-                    )}
-                    <span className="news-card__date">{formatDate(item.created_at)}</span>
-                  </div>
-                  <h3 className="news-card__title">{item.title}</h3>
-                  {item.excerpt && <p className="news-card__excerpt">{item.excerpt}</p>}
-                  <span className="news-card__read">
-                    <div>Read more</div>
-                    <div>→</div>
+          <>
+            <div className="news-section__grid">
+              {filtered.slice(0, 3).map((item, i) => (
+                <article
+                  className="news-card"
+                  key={item.id}
+                  style={{ animationDelay: `${i * 0.07}s` }}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    navigate(`/news/${item.id}`);
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyPress={(e) => e.key === 'Enter' && navigate(`/news/${item.id}`)}
+                >
+                  {item.image_url && (
+                    <div className="news-card__img-wrap">
+                      <img src={item.image_url} alt={item.title} className="news-card__img" />
+                    </div>
+                  )}
+                  <div className="news-card__body">
+                    <div className="news-card__meta">
+                      {item.badge_text && (
+                        <span className="badge" style={{ background: (item.badge_color || '#2D7D6F') + '20', color: item.badge_color || '#2D7D6F' }}>
+                          {item.badge_text}
+                        </span>
+                      )}
+                      <span className="news-card__date">{formatDate(item.created_at)}</span>
+                    </div>
+                    <h3 className="news-card__title">{item.title}</h3>
+                    {item.excerpt && <p className="news-card__excerpt">{item.excerpt}</p>}
+                    <span className="news-card__read">
+                      <div>Read more</div>
+                      <div>→</div>
                     </span>
-                </div>
-              </article>
-            ))}
-          </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="news-section__footer">
+              <button
+                className="btn btn-outline"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate('/news');
+                }}
+              >
+                View All Announcements
+              </button>
+            </div>
+          </>
         )}
       </div>
     </section>

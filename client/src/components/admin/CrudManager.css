@@ -97,3 +97,17 @@
   display: flex; justify-content: flex-end; gap: 10px;
   padding-top: 20px; margin-top: 8px; border-top: 1.5px solid var(--border);
 }
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group[style*="display: inline-block"] {
+  vertical-align: top;
+}
+
+/* Image field styling */
+.form-group > .image-upload {
+  margin-top: 8px;
+}
