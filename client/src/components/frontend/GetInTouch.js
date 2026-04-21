@@ -116,11 +116,6 @@ const GetInTouch = () => {
               </div>
             ))}
           </div>
-
-          <div className="contact__map">
-            <IconMap />
-            <span>Interactive map coming soon</span>
-          </div>
         </div>
 
         {/* ── Right ── */}
