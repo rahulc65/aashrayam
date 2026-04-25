@@ -5,11 +5,23 @@ const authMiddleware = require('../middleware/auth');
 const fs = require('fs');
 const path = require('path');
 
-// Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, '../uploads/news');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
+// FIX 3: Vercel filesystem is READ-ONLY except for /tmp.
+// Top-level mkdirSync(__dirname + '/uploads') throws EACCES and crashes the
+// entire serverless function at module-load time — before any request is handled.
+//
+// Solution: Use /tmp for file storage on Vercel (files survive the function
+// lifetime only). For persistent storage, migrate uploads to Supabase Storage.
+const IS_VERCEL = !!process.env.VERCEL;
+const uploadsDir = IS_VERCEL
+  ? '/tmp/uploads/news'
+  : path.join(__dirname, '../uploads/news');
+
+// Safe mkdir — called lazily, not at module load time
+const ensureUploadsDir = () => {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+};
 
 // Helper function to save base64 image and return filename
 const saveBase64Image = (base64String) => {
@@ -27,7 +39,8 @@ const saveBase64Image = (base64String) => {
     const filename = `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileType}`;
     const filepath = path.join(uploadsDir, filename);
 
-    // Save file
+    // Save file (creates dir on first call — safe on both local and Vercel)
+    ensureUploadsDir();
     fs.writeFileSync(filepath, buffer);
 
     // Return relative path for API access

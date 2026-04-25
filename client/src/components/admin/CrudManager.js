@@ -119,7 +119,12 @@ const CrudManager = ({
       if ((field.name === 'features' || field.name === 'addon_courses' || field.name === 'tags') && Array.isArray(item[field.name])) {
         f[field.name] = item[field.name].join('\n');
       } else {
-        f[field.name] = item[field.name] ?? field.default ?? '';
+        let value = item[field.name] ?? field.default ?? '';
+        // Strip time from date fields (convert ISO datetime to date-only format)
+        if (field.type === 'date' && value && typeof value === 'string' && value.includes('T')) {
+          value = value.split('T')[0];
+        }
+        f[field.name] = value;
       }
     });
     setForm(f);
@@ -140,11 +145,38 @@ const CrudManager = ({
     setSaving(true);
     const payload = { ...form };
 
-    Object.keys(formImageData).forEach(fieldName => {
+    // Handle image uploads for gallery items
+    for (const fieldName of Object.keys(formImageData)) {
       if (formImageData[fieldName]) {
-        payload[fieldName + 'Data'] = formImageData[fieldName];
+        try {
+          // Only upload if it's actual image data (data URL starts with 'data:')
+          const imageData = formImageData[fieldName];
+          if (typeof imageData === 'string' && imageData.startsWith('data:')) {
+            // Convert data URL to blob and upload
+            const response = await fetch(imageData);
+            const blob = await response.blob();
+            const file = new File([blob], `image_${Date.now()}.jpg`, { type: 'image/jpeg' });
+            
+            const formDataForUpload = new FormData();
+            formDataForUpload.append('file', file);
+            const uploadRes = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000/api'}/gallery/upload-image`, {
+              method: 'POST',
+              headers: { 'Authorization': `Bearer ${localStorage.getItem('orbit_token')}` },
+              body: formDataForUpload
+            });
+            const uploadData = await uploadRes.json();
+            if (uploadData.path) {
+              payload[fieldName] = uploadData.path;
+            }
+          }
+        } catch (err) {
+          console.error('Image upload failed:', err);
+          flash('Image upload failed. Please try again.', 'error');
+          setSaving(false);
+          return;
+        }
       }
-    });
+    }
 
     if (payload.features && typeof payload.features === 'string') {
       payload.features = payload.features.split('\n').map(s => s.trim()).filter(Boolean);
@@ -157,6 +189,13 @@ const CrudManager = ({
     }
     fields.forEach(f => {
       if (f.type === 'toggle') payload[f.name] = payload[f.name] === true || payload[f.name] === 'true';
+    });
+
+    // Remove temporary local_ markers that were just for UI
+    Object.keys(payload).forEach(key => {
+      if (typeof payload[key] === 'string' && payload[key].startsWith('local_')) {
+        delete payload[key];
+      }
     });
 
     try {
@@ -330,7 +369,15 @@ const CrudManager = ({
                         setFormImageData(prev => ({ ...prev, [field.name]: dataUrl }));
                         if (dataUrl) handleChange(field.name, `local_${Date.now()}`);
                       }}
-                      initialImage={form[field.name] && !form[field.name].startsWith('local_') ? form[field.name] : null}
+                      initialImage={(() => {
+                        const _v = form[field.name];
+                        if (!_v || _v.startsWith('local_')) return null;
+                        if (_v.startsWith('/uploads/')) {
+                          const _b = (process.env.REACT_APP_API_URL || 'http://localhost:4000/api').replace('/api', '');
+                          return _b + _v;
+                        }
+                        return _v;
+                      })()}
                       disabled={saving}
                     />
                   )}

@@ -124,7 +124,9 @@ export const AdminGallery = () => (
       emptyMsg="No gallery images yet. Add your first campus photo!"
       columns={[
         { key: 'image_url', label: 'Preview', render: r => {
-          const src = r.image_url || (r.file_path ? `/uploads/gallery/${r.file_path}` : null);
+          const _base = (process.env.REACT_APP_API_URL || 'http://localhost:4000/api').replace('/api', '');
+          const _raw = r.image_url || null;
+          const src = _raw ? (_raw.startsWith('/uploads/') ? _base + _raw : _raw) : null;
           return src ? <img src={src} alt="" style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: 6 }} /> : '—';
         }},
         { key: 'title', label: 'Title' },

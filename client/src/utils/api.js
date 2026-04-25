@@ -1,11 +1,34 @@
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000/api';
 
+// Derive the base server URL from API_URL (strip /api suffix)
+// e.g. "http://localhost:4000/api" → "http://localhost:4000"
+const SERVER_URL = API_URL.replace(/\/api$/, '');
+
 const getToken = () => localStorage.getItem('orbit_token');
 
 const headers = (auth = false) => {
   const h = { 'Content-Type': 'application/json' };
   if (auth) h['Authorization'] = `Bearer ${getToken()}`;
   return h;
+};
+
+/**
+ * FIX: Convert a stored image path to a fully-qualified URL.
+ *
+ * The backend stores uploaded images as relative paths like:
+ *   /uploads/gallery/gallery_1776855415510_s7vso4mvb.jpg
+ *
+ * The browser cannot load these as-is — it needs the full server URL:
+ *   http://localhost:4000/uploads/gallery/gallery_xxx.jpg
+ *
+ * External URLs (https://...) are returned unchanged.
+ * null / undefined return null.
+ */
+export const resolveImageUrl = (path) => {
+  if (!path) return null;
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (path.startsWith('/uploads/')) return `${SERVER_URL}${path}`;
+  return path;
 };
 
 export const api = {
