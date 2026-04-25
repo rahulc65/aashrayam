@@ -78,8 +78,21 @@ const ProgramsSection = () => {
                 )}
 
                 {/* Program Index Number */}
+                <div className='program-head'>
+
                 <div className="program-card__number">
                   {String(i + 1).padStart(2, '0')}
+                </div>
+
+               {/* Tags Section */}
+                {prog.tags && prog.tags.length > 0 && (
+                  <div className="program-card__tags">
+                    {prog.tags.map((tag, tagIdx) => (
+                      <span key={tagIdx} className="program-card__tag-pill">{tag}</span>
+                    ))}
+                  </div>
+                )}
+
                 </div>
 
                 <h3 className="program-card__title">{prog.title}</h3>
