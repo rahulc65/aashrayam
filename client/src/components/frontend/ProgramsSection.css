@@ -13,6 +13,11 @@
   gap: 24px;
 }
 
+.program-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 /* ── Base Card ── */
 .program-card {
   background: #ffffff;
