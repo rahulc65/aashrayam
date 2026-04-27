@@ -145,33 +145,27 @@ const CrudManager = ({
     setSaving(true);
     const payload = { ...form };
 
-    // Handle image uploads for gallery items
+    // ── FIX: Upload images to Supabase Storage instead of the backend server.
+    //    Vercel's filesystem is ephemeral — files saved to disk vanish after the
+    //    serverless function ends. Supabase Storage is permanent and CDN-served.
     for (const fieldName of Object.keys(formImageData)) {
       if (formImageData[fieldName]) {
         try {
-          // Only upload if it's actual image data (data URL starts with 'data:')
           const imageData = formImageData[fieldName];
           if (typeof imageData === 'string' && imageData.startsWith('data:')) {
-            // Convert data URL to blob and upload
-            const response = await fetch(imageData);
-            const blob = await response.blob();
-            const file = new File([blob], `image_${Date.now()}.jpg`, { type: 'image/jpeg' });
-            
-            const formDataForUpload = new FormData();
-            formDataForUpload.append('file', file);
-            const uploadRes = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000/api'}/gallery/upload-image`, {
-              method: 'POST',
-              headers: { 'Authorization': `Bearer ${localStorage.getItem('orbit_token')}` },
-              body: formDataForUpload
-            });
-            const uploadData = await uploadRes.json();
-            if (uploadData.path) {
-              payload[fieldName] = uploadData.path;
-            }
+            // Convert data URL → Blob → File
+            const fetchRes  = await fetch(imageData);
+            const blob      = await fetchRes.blob();
+            const ext       = blob.type.split('/')[1] || 'jpg';
+            const file      = new File([blob], `image_${Date.now()}.${ext}`, { type: blob.type });
+
+            // Upload to Supabase Storage → returns a permanent public https:// URL
+            const publicUrl = await uploadImageToSupabase(file, 'gallery');
+            payload[fieldName] = publicUrl; // Store full URL, not a local path
           }
         } catch (err) {
           console.error('Image upload failed:', err);
-          flash('Image upload failed. Please try again.', 'error');
+          flash('Image upload failed: ' + err.message, 'error');
           setSaving(false);
           return;
         }
