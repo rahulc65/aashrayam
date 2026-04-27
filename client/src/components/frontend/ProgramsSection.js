@@ -101,15 +101,6 @@ const ProgramsSection = () => {
                   <p className="program-card__desc">{prog.description}</p>
                 )}
 
-                {/* Tags Section */}
-                {prog.tags && prog.tags.length > 0 && (
-                  <div className="program-card__tags">
-                    {prog.tags.map((tag, tagIdx) => (
-                      <span key={tagIdx} className="program-card__tag-pill">{tag}</span>
-                    ))}
-                  </div>
-                )}
-
                 {/* Fees Section */}
                 {(prog.normal_fee || prog.addon_fee) && (
                   <div className="program-card__fees">
