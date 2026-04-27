@@ -63,7 +63,7 @@ const ProgramsSection = () => {
           <div className="news-section__empty">No programmes listed yet.</div>
         ) : (
           <div
-            className="programs-section__grid"
+            className="programs-section-grid"
             onMouseLeave={() => setFeaturedIndex(0)}
           >
             {programs.map((prog, i) => (
