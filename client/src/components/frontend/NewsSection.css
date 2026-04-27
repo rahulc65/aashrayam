@@ -11,7 +11,7 @@
   background: white; font-size: 13px; font-weight: 500; color: var(--muted);
   cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
 }
-.news-section__filter:hover { border-color: var(--teal); color: var(--teal); }
+.news-section__filter:hover { border-color: var(--teal); color: var(--white); }
 .news-section__filter--active { background: var(--teal); border-color: var(--teal); color: white; }
 
 .news-section__grid {
