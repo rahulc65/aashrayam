@@ -226,8 +226,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 16px;
-  margin-top: 8px;
 }
 
 .program-card__tag-pill {
