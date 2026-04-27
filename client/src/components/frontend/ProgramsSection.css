@@ -4,7 +4,7 @@
 .programs-section__header { text-align: center; margin-bottom: 48px; }
 .programs-section__header .section-label { justify-content: center; }
 .programs-section__header .section-label::before { display: none; }
-.programs-section__header .section-desc { margin: 0 auto; }
+.programs-section__header .section-desc { margin: 0 auto; }.program-card
 
 /* ── Grid ── */
 .programs-section__grid {
@@ -23,8 +23,7 @@
   background: #ffffff;
   border: 1px solid #e8e8e8;
   border-radius: 20px;
-  padding: 32px;
-  padding-top: 12px;
+  padding: 25px;
   position: relative;
   overflow: hidden;
   display: flex;
