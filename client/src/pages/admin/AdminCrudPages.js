@@ -124,9 +124,16 @@ export const AdminGallery = () => (
       emptyMsg="No gallery images yet. Add your first campus photo!"
       columns={[
         { key: 'image_url', label: 'Preview', render: r => {
-          const _base = (process.env.REACT_APP_API_URL || 'http://localhost:4000/api').replace('/api', '');
-          const _raw = r.image_url || null;
-          const src = _raw ? (_raw.startsWith('/uploads/') ? _base + _raw : _raw) : null;
+          const raw = r.image_url || null;
+          let src = null;
+          if (raw) {
+            if (raw.startsWith('http://') || raw.startsWith('https://')) {
+              src = raw; // Supabase CDN URL or external URL — use directly
+            } else if (raw.startsWith('/uploads/')) {
+              const base = (process.env.REACT_APP_API_URL || 'http://localhost:4000/api').replace('/api', '');
+              src = base + raw; // Legacy local upload (works locally only)
+            }
+          }
           return src ? <img src={src} alt="" style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: 6 }} /> : '—';
         }},
         { key: 'title', label: 'Title' },
@@ -136,7 +143,7 @@ export const AdminGallery = () => (
       ]}
       fields={[
         { name: 'image_url', label: 'Image URL (Optional)', placeholder: 'https://images.unsplash.com/...' },
-        { name: 'file_path', label: 'Upload Image File', type: 'image', placeholder: 'Upload campus photo' },
+        { name: 'image_url', label: 'Upload Image File', type: 'image', placeholder: 'Drag & drop or click to upload' },
         { name: 'title', label: 'Caption / Title', placeholder: 'e.g. Students at Science Lab' },
         { name: 'category', label: 'Category', type: 'select', options: ['Campus Life','Events','Facilities','Sports','Cultural','Graduation'], default: 'Campus Life' },
         { name: 'sort_order', label: 'Display Order', type: 'number', default: 0, half: true },
