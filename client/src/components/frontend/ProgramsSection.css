@@ -7,7 +7,7 @@
 .programs-section__header .section-desc { margin: 0 auto; }.program-card
 
 /* ── Grid ── */
-.programs-section__grid {
+.programs-section-grid{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
