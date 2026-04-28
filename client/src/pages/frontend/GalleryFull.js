@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react';
 import { api } from '../../utils/api';
 import './GalleryFull.css';
 
+const SERVER_URL = (process.env.REACT_APP_API_URL || 'http://localhost:4000/api').replace('/api', '');
+const resolveImg = (url) => {
+  if (!url) return null;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('/uploads/')) return SERVER_URL + url;
+  return url;
+};
+
 // ── FIX: resolve relative /uploads/ paths to the full backend URL ──────────
 const SERVER_URL = (process.env.REACT_APP_API_URL || 'http://localhost:4000/api').replace('/api', '');
 const resolveImg = (url) => {
