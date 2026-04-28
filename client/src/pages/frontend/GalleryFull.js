@@ -10,14 +10,6 @@ const resolveImg = (url) => {
   return url;
 };
 
-// ── FIX: resolve relative /uploads/ paths to the full backend URL ──────────
-const SERVER_URL = (process.env.REACT_APP_API_URL || 'http://localhost:4000/api').replace('/api', '');
-const resolveImg = (url) => {
-  if (!url) return null;
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  if (url.startsWith('/uploads/')) return `${SERVER_URL}${url}`;
-  return url;
-};
 
 const IconClose = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
