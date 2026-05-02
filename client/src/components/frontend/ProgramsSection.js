@@ -62,7 +62,7 @@ const ProgramsSection = () => {
         ) : programs.length === 0 ? (
           <div className="news-section__empty">No programmes listed yet.</div>
         ) : (
-          <div className="programs-section-grid" onMouseLeave={() => setFeaturedIndex(0)} style="grid-template-columns: repeat(4, 1fr);" >
+          <div className="programs-grid-section" onMouseLeave={() => setFeaturedIndex(0)}>
             {programs.map((prog, i) => (
               <div
                 className={`program-card${featuredIndex === i ? ' program-card--featured' : ''}${prog.is_proposed ? ' program-card--proposed' : ''}`}
